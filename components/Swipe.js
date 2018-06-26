@@ -18,7 +18,7 @@ class Swipe extends Component {
     onSwipeRight: () => {},
     onSwipeLeft: () => {},
     keyProp: 'id'
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -32,10 +32,8 @@ class Swipe extends Component {
       onPanResponderRelease: (event, gesture) => {
         if (gesture.dx > SWIPE_THRESHOLD) {
           this.forceSwipe('right');
-
         } else if (gesture.dx < -SWIPE_THRESHOLD) {
           this.forceSwipe('left');
-
         } else {
           this.resetPosition();
         }
@@ -52,7 +50,8 @@ class Swipe extends Component {
   }
 
   componentWillUpdate() {
-    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.spring();
   }
 
@@ -98,10 +97,11 @@ class Swipe extends Component {
     }
 
     const deck = this.props.data.map((item, i) => {
-      if (i < this.state.index) { return null; }
+      if (i < this.state.index) {
+        return null;
+      }
 
       if (i === this.state.index) {
-
         return (
           <Animated.View
             key={item[this.props.keyProp]}
@@ -113,11 +113,13 @@ class Swipe extends Component {
         );
       }
 
-
       return (
         <Animated.View
           key={item[this.props.keyProp]}
-          style={[styles.cardStyle, { top: 10 * (i - this.state.index), zIndex: -i }]}
+          style={[
+            styles.cardStyle,
+            { top: 10 * (i - this.state.index), zIndex: -i }
+          ]}
         >
           {this.props.renderCard(item)}
         </Animated.View>
@@ -130,11 +132,7 @@ class Swipe extends Component {
   }
 
   render() {
-    return (
-      <View>
-        {this.renderCards()}
-      </View>
-    );
+    return <View>{this.renderCards()}</View>;
   }
 }
 

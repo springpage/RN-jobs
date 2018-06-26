@@ -3,10 +3,7 @@ import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 import data_sample from './data_sample.json';
 
-import {
-  FETCH_JOBS,
-  LIKE_JOB
-} from './types';
+import { FETCH_JOBS, LIKE_JOB } from './types';
 
 const JOB_ROOT_URL = 'http://api.indeed.com/ads/apisearch?';
 const JOB_QUERY_PARAMS = {
@@ -18,31 +15,27 @@ const JOB_QUERY_PARAMS = {
   q: 'javascript'
 };
 
-const buildJobsUrl = (zip) => {
-  const query = qs.stringify({...JOB_QUERY_PARAMS, l: zip});
+const buildJobsUrl = zip => {
+  const query = qs.stringify({ ...JOB_QUERY_PARAMS, l: zip });
   return `${JOB_ROOT_URL}${query}`;
-}
-export const fetchJobs = (region, callback) => async (dispatch) => {
-  try{
+};
+export const fetchJobs = (region, callback) => async dispatch => {
+  try {
     let zip = await reverseGeocode(region);
     const url = buildJobsUrl(zip);
     let data = await axios.get(url);
 
     //For data_sample
-    data=data_sample;
-    dispatch({type: FETCH_JOBS, payload: data});
+    data = data_sample;
+    dispatch({ type: FETCH_JOBS, payload: data });
     callback();
-
-  }catch(e){
+  } catch (e) {
     console.log(e);
   }
-
-
-
 };
 
-export const likeJob = (job)=>{
-  return{
+export const likeJob = job => {
+  return {
     payload: job,
     type: LIKE_JOB
   };
